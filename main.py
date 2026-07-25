@@ -7,6 +7,7 @@ from models import Product
 # Create the FastAPI application instance.
 # Uvicorn will use this object to serve the API.
 # Use uvicorn main:app --reload to run the application in development mode.
+# http://localhost:8000/docs - Swagger UI for API documentation and testing. ( inbuilt in FastAPI )
 app = FastAPI()
 
 @app.get("/")
@@ -27,3 +28,16 @@ products = [
 @app.get("/products")
 def get_all_products():
     return products
+
+@app.get("/product/{id}")
+def get_product_by_id(id: int):
+    for product in products:
+        if product.id == id:
+            return product
+
+    return "Product not found"
+
+@app.post("/product")
+def add_product(product: Product):
+    products.append(product)
+    return product
