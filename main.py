@@ -23,6 +23,8 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # Allow requests from this origin (React app running on localhost:3000)
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Allow all headers in requests
 )
 
 database_models.Base.metadata.create_all(bind=engine)
@@ -84,7 +86,7 @@ def add_product(product: Product, db: Session = Depends(get_db)):
     db.commit()
     return product
 
-@app.put("/product")
+@app.put("/product/{id}")
 def update_product(id: int, product: Product, db: Session = Depends(get_db)):
     # for i in range(len(products)):
     #     if products[i].id == id:
