@@ -1,4 +1,5 @@
 # Create a virtual env and install FastAPI and Uvicorn using pip.
+# Install postgresql and pgadmin in system
 # pip install -r requirements.txt
 
 # Import FastAPI for building the web API.
@@ -7,11 +8,16 @@ from fastapi import FastAPI
 # Import the Product class from the local models module.
 from models import Product
 
+from database import SessionLocal, engine
+import database_models
+
 # Create the FastAPI application instance.
 # Uvicorn will use this object to serve the API.
 # Use uvicorn main:app --reload to run the application in development mode.
 # http://localhost:8000/docs - Swagger UI for API documentation and testing. ( inbuilt in FastAPI )
 app = FastAPI()
+
+database_models.Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def greet():
@@ -30,6 +36,8 @@ products = [
 
 @app.get("/products")
 def get_all_products():
+    db = SessionLocal()
+    db.query()
     return products
 
 @app.get("/product/{id}")
