@@ -12,11 +12,18 @@ from database import SessionLocal, engine
 import database_models
 from sqlalchemy.orm import Session
 
+from fastapi.middleware.cors import CORSMiddleware
+
 # Create the FastAPI application instance.
 # Uvicorn will use this object to serve the API.
 # Use uvicorn main:app --reload to run the application in development mode.
 # http://localhost:8000/docs - Swagger UI for API documentation and testing. ( inbuilt in FastAPI )
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Allow requests from this origin (React app running on localhost:3000)
+)
 
 database_models.Base.metadata.create_all(bind=engine)
 
