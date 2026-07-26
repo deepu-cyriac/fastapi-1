@@ -41,3 +41,21 @@ def get_product_by_id(id: int):
 def add_product(product: Product):
     products.append(product)
     return product
+
+@app.put("/product")
+def update_product(id: int, product: Product):
+    for i in range(len(products)):
+        if products[i].id == id:
+            products[i] = product
+            return "Product added successfully"
+
+    return "No product found"
+
+@app.delete("/product")
+def delete_product(id: int):
+    for i in range(len(products)):
+        if products[i].id == id:
+            del products[i]
+            return "Product deleted successfully"
+
+    return "Product not found"
