@@ -1,3 +1,6 @@
+# Create a virtual env and install FastAPI and Uvicorn using pip.
+# pip install -r requirements.txt
+
 # Import FastAPI for building the web API.
 from fastapi import FastAPI
 
